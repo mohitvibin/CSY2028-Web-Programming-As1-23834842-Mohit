@@ -1,0 +1,161 @@
+<?php
+
+require 'dbconnection.php';
+
+
+if(isset($_GET['search'])) {
+    $search_query = $_GET['search'];
+
+
+    $display = $Connection->prepare('SELECT * FROM auctions WHERE car_name LIKE :search_query');
+    $search_query = "%$search_query%"; 
+    $display->bindParam(':search_query', $search_query);
+    $display->execute();
+} else {
+    // If search query is not provided, this will fetch all car listings
+    $display = $Connection->prepare('SELECT * FROM auctions');
+    $display->execute();
+}
+?>
+<?php
+// Fetching all the categories from the database
+$categories = $Connection->query('SELECT * FROM Category_only')->fetchAll(PDO::FETCH_ASSOC);
+
+
+$categoriesToShow = 7;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carbuy Auctions</title>
+    <link rel="stylesheet" href="carbuy.css" />
+</head>
+
+<body>
+<header>
+    <h1> <a href="https://as1.v.je/">
+            <span class="C">C</span>
+            <span class="a">a</span>
+            <span class="r">r</span>
+            <span class="b">b</span>
+            <span class="u">u</span>
+            <span class="y">y</span>
+        </a>
+    </h1>
+
+    <form action="search.php" method="GET">
+    <input type="text" name="search" placeholder="Search for a car title">
+    <input type="submit" value="Search">
+
+        <div class="loginregister">
+    <?php if(isset($_SESSION['user_id'])) { 
+        if($_SESSION['Role'] == 'admin') { ?>
+            <div class="dropdown">
+                <span>Admin</span>
+                <div class="dropdown-content">
+                    <a href="admin_dashboard.php">Dashboard</a>
+                    <a href="addAuction.php">Add Auction</a>
+                    <a href="add_category.php">Add Category</a>
+                    <a href="logout.php">Logout</a>
+                </div>
+                <span><?php echo $_SESSION['user_id']; ?></span>
+            </div>
+        <?php } else { ?>
+            <div class="dropdown">
+                <span>User</span>
+                <div class="dropdown-content">
+                    <a href="user_dashboard.php">Dashboard</a>
+                    <a href="addAuction.php">Add Auction</a>
+                    <a href="logout.php">Logout</a>
+                </div>
+                <span><?php echo $_SESSION['user_id']; ?></span>
+            </div>
+        <?php } ?>
+    <?php } else { ?>
+        <a class="login" href="https://as1.v.je/login.php">Login</a>
+        <a> / </a>
+        <a class="register" href="https://as1.v.je/register.php">Register</a>
+    <?php } ?>
+</div>
+    </form>
+</header>
+
+<nav>
+    <ul>
+        <?php
+        
+        $counter = 0;
+        foreach ($categories as $category) {
+            if ($counter < $categoriesToShow) {
+                echo '<li><a class="categoryLink" href="category.php?category=' . $category['category_name'] . '">' . $category['category_name'] . '</a></li>';
+            } else {
+                break; 
+            }
+            $counter++;
+        }
+        ?>
+        <li class="more">
+            <button class="morebtn">More</button>
+            <div class="more-content">
+                <?php
+                
+                for ($i = $counter; $i < count($categories); $i++) {
+                    echo '<a href="category.php?category=' . $categories[$i]['category_name'] . '">' . $categories[$i]['category_name'] . '</a>';
+                }
+                ?>
+            </div>
+        </li>
+    </ul>
+</nav>
+<div class = "searchquery" >
+<?php if(isset($_GET['search'])) { ?>
+        <p>Your Result for "<?php echo htmlspecialchars($_GET['search']); ?>":</p>
+    <?php } ?>
+</div>
+
+<ul class="carList">
+    <?php
+    foreach ($display as $key) {
+        
+        $bidStatement = $Connection->prepare('SELECT MAX(amount) AS current_bid FROM auction_bids WHERE auction_id = :auction_id');
+        $bidStatement->bindParam(':auction_id', $key['id']);
+        $bidStatement->execute();
+        $currentBid = $bidStatement->fetch(PDO::FETCH_ASSOC);
+        $currentBidAmount = $currentBid['current_bid'];
+
+        
+        $categoryStatement = $Connection->prepare('SELECT category_name FROM Category_only WHERE id = :category_id');
+        $categoryStatement->bindParam(':category_id', $key['category_id']);
+        $categoryStatement->execute();
+        $category = $categoryStatement->fetch(PDO::FETCH_ASSOC);
+
+        echo '<li>
+            <div class="card">
+                <img src="' . $key['image_path'] . '" alt="Car Image">';
+        if ($currentBidAmount !== null) {
+            echo '<p class="price">Current bid: £' . number_format($currentBidAmount, 2) . '</p>';
+        } else {
+            echo '<p class="price">No bids yet</p>';
+        }
+        echo '<br>
+                <h2>' . $key['car_name'] . '</h2>
+                <h3 class="category">' . $category['category_name'] . '</h3> <!-- Display category name -->
+                <p>' . $key['description'] . '</p>
+                <div style="margin: 24px 0;">
+                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a href="#"><i class="fa fa-star"></i></a>
+                </div>
+                <form action="auction.php" method="get">
+                    <input type="hidden" name="id" value="' . $key['id'] . '">
+                    <input type="hidden" name="category" value="' . $category['category_name'] . '">
+                    <button type="submit" name="more">More</button>
+                </form>
+            </div>
+        </li>';
+    }
+    ?>
+</ul>
+</body>
+</html>

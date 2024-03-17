@@ -1,0 +1,281 @@
+/* Import website font */
+@import url('https://stockfont.org/?3e1218d9a01517d5734a1be9e67be4af797abff1230ab272235ec8ed759251d6');
+
+
+
+
+
+header {
+
+	font-family: 'Univers-Light-Normal';
+	display: grid;
+	grid-template-columns: 15% 85%;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+	margin: 30px;
+}
+
+header h1 {
+	text-align: center;
+	font-size: 2em;
+	margin-right: 20px;
+	margin-top: 3px;
+}
+
+
+header form input[type=text] {
+	box-shadow: 0 0px 15px rgba(0, 0, 0, 0.1);
+	font-size: 2em;
+	padding: 0.5em;
+	width: 70%;
+	border-radius: 50px;
+	border: none;
+}
+
+body > img { width: 100vw; }
+
+header form input[type=submit] {
+	background-color: #3665f3;
+	box-shadow: 0 0px 15px rgba(0, 0, 0, 0.1);
+	color: white;
+	width: 13%;
+	font-size: 2em;
+	margin-left: 20px;
+	padding: 0.5em;
+	cursor: pointer;
+	border: 2px solid #ddd;
+	border-radius: 50px;
+}
+
+header form input[type=submit]:hover {
+	background-color: transparent;
+	box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+	border: 2px solid black;
+	transition: 0.3s;
+	color: #222;
+
+}
+
+header form .loginregister {
+
+	color: black;
+	font-size: 1.3em;
+	cursor: pointer;
+	text-align: right;
+	margin-left: 20px;
+}
+
+header .i {
+	color: #e43137;
+}
+header .b {
+	color: #0063d1;
+}
+header .u {
+	color: #f4ae01;
+}
+header .y {
+	color: #85b716;
+}
+
+nav {
+    border-bottom: 1px solid #ddd;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    flex: 1;
+    text-align: center;
+}
+
+nav ul li a {
+    display: block;
+    padding: 12.8px 20px;
+    text-decoration: none;
+    color: black;
+    background-color: #f4cf4f;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* This is the CSS of Register Page */
+.register-container {
+    width: 300px;
+    margin: 50px auto; 
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em; 
+}
+
+.register-container form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1em; 
+}
+
+.register-container form input[type="text"],
+.register-container form input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 1em; 
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.register-container form input[type="submit"] {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 1em; 
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.register-container form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* This is the CSS of Login Page  */
+.login-container {
+    width: 300px;
+    margin: 50px auto; 
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.login-container form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.login-container form input[type="text"],
+.login-container form input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.login-container form input[type="submit"] {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-container form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+.backtohome a {
+    margin-left: 45.6%;
+    text-decoration: none;
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.backtologin a {
+    margin-left: 47%;
+    text-decoration: none;
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.backtologin p {
+    margin-left: 44%;
+    width: 100%;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+}
+
+
+
+
+
+.searchquery p {
+	margin: 40px;
+	font-size: 2em;
+	text-decoration: underline;
+  }
